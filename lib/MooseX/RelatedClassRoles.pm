@@ -37,12 +37,15 @@ role {
 
   method $apply_method_name => sub {
     my $self = shift;
-    my $meta = Moose::Meta::Class->create_anon_class(
-      superclasses => [ $self->$class_accessor_name ],
-      roles        => [ @_ ],
-      cache        => 1,
-    );
-    $self->$class_accessor_name($meta->name);
+    if(@_)
+    {
+      my $meta = Moose::Meta::Class->create_anon_class(
+        superclasses => [ $self->$class_accessor_name ],
+        roles        => [ @_ ],
+        cache        => 1,
+      );
+      $self->$class_accessor_name($meta->name);
+    }
   };
 };
 
